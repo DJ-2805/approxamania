@@ -1,3 +1,6 @@
+#ifndef FUNCTION_H
+#define FUNCTION_H
+
 #include <iostream>
 
 class Function {
@@ -16,4 +19,6 @@ class Function {
   double* m_y;
   int m_size;
   int m_power;
-}
+};
+
+#endif
