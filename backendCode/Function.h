@@ -7,8 +7,8 @@
 class Function {
  public:
   Function(int power, std::string difficulty);
-  std::vector<double> getCoefficients() const;
   int getPower() const;
+  std::vector<double> getCoefficients() const;
   std::vector<double> getX() const;
   std::vector<double> getY() const;
   // std::vector<double> getExtremum() const;
