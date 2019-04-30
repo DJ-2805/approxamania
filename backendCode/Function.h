@@ -2,22 +2,25 @@
 #define FUNCTION_H
 
 #include <iostream>
+#include <vector>
 
 class Function {
  public:
-  Function(int power, double* coefficients);
-  double* getConstants();
-  int getPower();
-  double* getExtremum();
-  void findExtreme();
+  Function(int power, std::string difficulty);
+  std::vector<double> getCoefficients() const;
+  int getPower() const;
+  std::vector<double> getX() const;
+  std::vector<double> getY() const;
+  // std::vector<double> getExtremum() const;
+  // void findExtreme();
   ~Function();
  private:
-  double* bisectionMethod();
-  double* m_extremum;
-  double* m_constants;
-  double* m_x;
-  double* m_y;
-  int m_size;
+  // std::vector<double> bisectionMethod();
+  // std::vector<double> m_extremum;
+  std::vector<double> m_coefficients;
+  std::vector<double> m_x;
+  std::vector<double> m_y;
+  std::string m_difficulty;
   int m_power;
 };
 
