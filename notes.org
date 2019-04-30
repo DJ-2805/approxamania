@@ -1,13 +1,7 @@
-# pic10c_project
-  - function class
-    - constants
-    - power
-    - max/mins
-    - bounds
-  - plotter
-  - graph
-  - linerider
-  - Project Approximania
+* Design
+  1. I installed Qt.
+  2. Juan Carbajal, juancarbajal98@gmail.com
+  3. Project Approximania
      - Details
        Application will take a function to be plotted, and user will guess a max on that function. If user is within error bound, they get to play a game where a character will ride on the curve of the function.
      - Design
@@ -19,3 +13,12 @@
        - Week 6: implementing user interface with the curve
        - Week 7: cleaning up GUI
        - Week 8: polishing code and GUI
+* Draft
+  - function class
+    - constants
+    - power
+    - max/mins
+    - bounds
+  - plotter
+  - graph
+  - linerider
