@@ -7,23 +7,26 @@
 // Constructor
 // ****************************************
 Function::Function(int power, std::string difficulty)
-  :  m_power(power), m_difficulty(difficulty) {
+  :  m_power(power), m_difficulty(difficulty), m_error(0.001) {
   double step = .01;
   int size = 20;
   int i;
 
   if(difficulty == "simple")
-    m_error = 1;
+    m_userError = 1;
   else if(difficulty == "intermediate")
-    m_error = 0.1;
+    m_userError = 0.1;
   else if(difficulty == "difficult")
-    m_error = 0.001;
+    m_userError = 0.001;
   else
-    m_error = 0.001;
+    m_userError = 0.001;
 
-  this->m_x.resize(size/step);
-  for(i = 0; i < this->m_x.size(); i++)
-    this->m_x[i] = (i-size/2)+step;
+  m_x.resize(size/step);
+  double j = 0;
+  for(i = 0; i < m_x.size(); i++) {
+    this->m_x[i] = (j-size/2);
+    j += step;
+  }
 
   m_coefficients.resize(power+1);
   int len = m_coefficients.size();
@@ -36,9 +39,11 @@ Function::Function(int power, std::string difficulty)
     m_coefficients[len-1] *= -1;
 
 
-  this->m_y.resize(size/step);
+  m_y.resize(size/step);
   for(i = 0; i < m_y.size();i++)
-    m_y[i] = this->f(m_x[i]);
+    m_y[i] = f(m_x[i]);
+
+  m_zero = bisectionMethod(m_x.front(),m_x.back(),m_error);
 }
 
 // ****************************************
@@ -86,10 +91,6 @@ double Function::f(double x) const {
   return y;
 }
 
-void Function::findZero() {
-
-}
-
 // ****************************************
 // Destructor
 // ****************************************
@@ -101,22 +102,38 @@ Function::~Function() {
 // Private Functions
 // ****************************************
 double Function::bisectionMethod(double start, double end, double error) {
-  // int n = 0;
-  // double a = start;
-  // double b = end;
-  // double p = (a+b)/2;
-  // double lShift = -1*error;
-  // double rShift = error;
-  //
-  // while(f(p) < lShift || f(p) >= rShift) {
-  // n++;
-  // if(f(p) > 0 && f(a) < 0)
-  // b = p;
-  // else if(f(p) > 0 && f(b) < 0)
-  // a = p;
-  // else if(f(p) < 0 && f(a) > 0)
-  // b = p
-  //
-  // }
-  return 0;
+  int n = 0;
+  double a = start;
+  double b = end;
+  double p = (a+b)/2;
+  double lShift = -1*error;
+  double rShift = error;
+  double fp = this->f(p);
+
+  while(fp < lShift || fp > rShift) {
+    n++;
+    double fa = this->f(a);
+    double fb = this->f(b);
+
+    if(fp > 0 && fa < 0)
+      b = p;
+    else if(fp > 0 && fb < 0)
+      a = p;
+    else if(fp < 0 && fa > 0)
+      b = p;
+    else if(fp < 0 && fb > 0)
+      a = p;
+    else
+      break;
+
+    p = (a+b)/2;
+    fp = this->f(p);
+    // std::cout << "a: " << a << " ";
+    // std::cout << "b: " << b << " ";
+    // std::cout << "p: " << p << " ";
+    // std::cout << "n: " << n << std::endl;
+  }
+
+  std::cout << "final p: " << p << " " << m_error << std::endl;
+  return p;
 }

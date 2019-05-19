@@ -4,10 +4,10 @@
 
 int main() {
   Function *f = new Function(2,"simple");
-  Function *g = new Function(3,"simple");
-  Function *h = new Function(4,"simple");
-  Function *ff = new Function(2,"simple");
-  Function *fg = new Function(2,"simple");
+  // Function *g = new Function(3,"simple");
+  // Function *h = new Function(4,"simple");
+  // Function *ff = new Function(2,"simple");
+  // Function *fg = new Function(2,"simple");
   std::cout << "Power: ";
   std::cout << f->getPower() << std::endl;
 
@@ -19,15 +19,15 @@ int main() {
   std::cout << std::endl;
 
   f->printFunc();
-  std::cout << f->f(5) << std::endl;
-  g->printFunc();
-  std::cout << g->f(5) << std::endl;
-  h->printFunc();
-  std::cout << h->f(5) << std::endl;
-  ff->printFunc();
-  std::cout << ff->f(5) << std::endl;
-  fg->printFunc();
-  std::cout << fg->f(5) << std::endl;
+  std::cout << f->getZero() << std::endl;
+  // g->printFunc();
+  // std::cout << g->getZero() << std::endl;
+  // h->printFunc();
+  // std::cout << h->getZero() << std::endl;
+  // ff->printFunc();
+  // std::cout << ff->getZero() << std::endl;
+  // fg->printFunc();
+  // std::cout << fg->getZero() << std::endl;
   /*
   std::cout << "x-values: " << std::endl;
   a = f->getX();

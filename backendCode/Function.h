@@ -16,7 +16,6 @@ class Function {
 
   void printFunc() const;
   double f(double x) const;
-  void findZero();
 
   ~Function();
  private:
@@ -28,6 +27,7 @@ class Function {
   double m_zero;
   double m_error;
   int m_power;
+  double m_userError;
   std::string m_difficulty;
 };
 
