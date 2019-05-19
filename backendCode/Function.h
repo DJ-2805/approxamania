@@ -7,21 +7,28 @@
 class Function {
  public:
   Function(int power, std::string difficulty);
+
   int getPower() const;
   std::vector<double> getCoefficients() const;
   std::vector<double> getX() const;
   std::vector<double> getY() const;
-  // std::vector<double> getExtremum() const;
-  // void findExtreme();
+  double getZero() const;
+
+  void printFunc() const;
+  double f(double x) const;
+  void findZero();
+
   ~Function();
  private:
-  // std::vector<double> bisectionMethod();
-  // std::vector<double> m_extremum;
+  double bisectionMethod(double start, double end, double error);
+
   std::vector<double> m_coefficients;
   std::vector<double> m_x;
   std::vector<double> m_y;
-  std::string m_difficulty;
+  double m_zero;
+  double m_error;
   int m_power;
+  std::string m_difficulty;
 };
 
 #endif
