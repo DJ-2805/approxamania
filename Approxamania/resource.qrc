@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>img/heart3d.png</file>
+        <file>img/bluegrid.jpg</file>
+        <file>img/epsilon.jpg</file>
+    </qresource>
+</RCC>
