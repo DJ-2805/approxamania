@@ -7,7 +7,7 @@
 QT       += core gui
 QT       += multimedia
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = Approxamania_1
 TEMPLATE = app
@@ -26,11 +26,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        Function.cpp \
         main.cpp \
-        dialog.cpp
+        dialog.cpp \
+        qcustomplot.cpp
 
 HEADERS += \
-        dialog.h
+        Function.h \
+        dialog.h \
+        qcustomplot.h
 
 FORMS += \
         dialog.ui
