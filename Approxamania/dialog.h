@@ -16,6 +16,8 @@
 #include <QString>
 #include <string>
 #include <cassert>
+#include <algorithm>
+#include <vector>
 #include "Function.h"
 
 

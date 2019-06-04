@@ -219,18 +219,18 @@ Dialog::Dialog(QWidget *parent) :
     QLabel * helpPage_label = new QLabel ("<h1>Help Page</h1>");
     helpPage_label -> setAlignment(Qt::AlignCenter);
     QPushButton * helpToHomeButton = new QPushButton("Return to Home Screen");
-    QLabel * helpPage_descript1 = new QLabel ("Approxamania is a game of guessing. The user must first enter the power");
+    QLabel * helpPage_descript1 = new QLabel ("Approxamania is an educational game of guessing. The user must first enter the power");
     helpPage_descript1->setWordWrap(true);
     QLabel * helpPage_descript2 = new QLabel ("of the polynomial they would like to graph (between 1 and 4):");
     QLabel * helpPage_descript3 = new QLabel ("- 1 being a linear function of the form f(x) = ax + b");
     QLabel * helpPage_descript4 = new QLabel ("- 4 being a polynomial of the form f(x) = ax<sup>4</sup>+bx<sup>3</sup>+cx<sup>2</sup>+dx+e");
-    QLabel * helpPage_descript5 = new QLabel ("After selecting order, user then selects a difficulty which dictates how");
-    QLabel * helpPage_descript6 = new QLabel ("many chances they get to guess as well as how large of an error bound");
-    QLabel * helpPage_descript7 = new QLabel ("they will be allowed. User then can push 'Graph Polynomial' button and");
-    QLabel * helpPage_descript8 = new QLabel ("will be give chances to click (on blank grid) on where they believe the");
-    QLabel * helpPage_descript9 = new QLabel ("zeroes of the graphs are (the values of x such that f(x) = 0). ");
-    QLabel * helpPage_descript10 = new QLabel ("If user can guess a zero under the constraints of their selected");
-    QLabel * helpPage_descript11 = new QLabel ("difficulty, they will be prompted with a game right on their graph.");
+    QLabel * helpPage_descript5 = new QLabel ("After choosing a power, the user then selects a difficulty which dictates how");
+    QLabel * helpPage_descript6 = new QLabel ("many graphs will be plotted and alongside the one they chose.");
+    QLabel * helpPage_descript7 = new QLabel ("The goal of the user is to select the curve they chose before running out lives.");
+    QLabel * helpPage_descript8 = new QLabel ("Each incorrect guess will cost them a life, but will also delete a curve off the plot.");
+    QLabel * helpPage_descript9 = new QLabel ("Through this process the user will be aquainted with different power polynomials and learn their patterns.");
+    QLabel * helpPage_descript10 = new QLabel ("");
+    QLabel * helpPage_descript11 = new QLabel ("");
 
     QGridLayout * helpPageLayout = new QGridLayout(helpPage);
 
@@ -303,7 +303,19 @@ void Dialog::goToPage2(){
 
     //easy
     if(diff_1 ->isChecked()){
+
         polynomial_order = poly_order ->value();
+        std::vector <int> all_other_degrees;
+        for (int i = 1; i < 5; i++) {
+            if(i != polynomial_order){
+                all_other_degrees.push_back(i);
+            }
+        }
+
+        Function * easy_graph_2 = new Function (all_other_degrees[0], "simple");
+        Function * easy_graph_3 = new Function (all_other_degrees[1], "simple");
+        Function * easy_graph_4 = new Function (all_other_degrees[2], "simple");
+
        _stackedWidget -> setCurrentIndex(1);
        graph = new Function(polynomial_order, "simple");
 
@@ -317,23 +329,68 @@ void Dialog::goToPage2(){
        std::string s = func_reader.str(); // string is given all stringstream content
        page2_label -> setText(QString::fromUtf8(s.c_str())); // text in label is set by converting c_string into QString
 
-       ui -> graph1 ->addGraph();
-       ui -> graph1 -> graph(0) -> setData(graph->getX(), graph->getY());
-       // give the axes some labels:
-       ui -> graph1 ->xAxis->setLabel("x");
-       ui -> graph1 ->yAxis->setLabel("y");
-       // set axes ranges, so we see all data:
-       ui->graph1->xAxis->setRange(-10, 10);
-       ui->graph1->yAxis->setRange(-10, 10);
-       ui->graph1->replot();
+       // real graph
+       ui -> graph1 -> setSelectionTolerance(5);
+           ui -> graph1 ->addGraph();
+           ui -> graph1 -> graph(0) -> setData(graph->getX(), graph->getY());
 
+       // insert fake graphs
+           ui -> graph1 ->addGraph();
+           ui -> graph1 -> graph(1) -> setData(easy_graph_2->getX(), easy_graph_2->getY());
+
+           ui -> graph1 ->addGraph();
+           ui -> graph1 -> graph(2) -> setData(easy_graph_3->getX(), easy_graph_3->getY());
+
+           ui -> graph1 ->addGraph();
+           ui -> graph1 -> graph(3) -> setData(easy_graph_4->getX(), easy_graph_4->getY());
+
+           // give the axes some labels:
+           ui -> graph1 ->xAxis->setLabel("x");
+           ui -> graph1 ->yAxis->setLabel("y");
+           // set axes ranges, so we see all data:
+           ui->graph1->xAxis->setRange(-20, 20);
+           ui->graph1->yAxis->setRange(-50, 50);
+
+           //randonmly assign color
+              int j = rand() % 4;
+
+              int k = rand() % 4;
+              while(k==j){k = rand() % 4;}
+
+              int l = rand() % 4;
+              while(l==j || l==k){l = rand() % 4;}
+
+
+              int m = rand() % 4;
+              while (m ==j || m==k || m==l){m = rand() % 4;}
+
+
+              ui -> graph1 -> graph(j)->setPen(QPen(Qt::blue));
+              ui -> graph1 -> graph(k)->setPen(QPen(Qt::red));
+              ui -> graph1 -> graph(l)->setPen(QPen(Qt::green));
+              ui -> graph1 -> graph(m)->setPen(QPen(Qt::cyan));
+
+           ui->graph1->replot();
     }
 
     //intermediate
     if(diff_2 ->isChecked()){
         polynomial_order = poly_order ->value();
       _stackedWidget -> setCurrentIndex(2);
+
+
+      std::vector <int> all_other_degrees;
+      for (int i = 1; i < 5; i++) {
+          if(i != polynomial_order){
+              all_other_degrees.push_back(i);
+          }
+      }
+
       graph = new Function(polynomial_order, "intermediate");
+
+      Function * inter_graph_2 = new Function (all_other_degrees[0], "intermediate");
+      Function * inter_graph_3 = new Function (all_other_degrees[1], "intermediate");
+      Function * inter_graph_4 = new Function (all_other_degrees[2], "intermediate");
 
       // read function into stringstream from print function
       std::stringstream func_reader ;
@@ -344,22 +401,66 @@ void Dialog::goToPage2(){
       std::string s = func_reader.str(); // string is given all stringstream content
       page3_label -> setText(QString::fromUtf8(s.c_str())); // text in label is set by converting c_string into QString
 
+      //real graph
       ui -> graph2 ->addGraph();
       ui -> graph2 -> graph(0) -> setData(graph->getX(), graph->getY());
+
+      //add fake graphs
+      ui -> graph2 ->addGraph();
+      ui -> graph2 -> graph(1) -> setData(inter_graph_2->getX(), inter_graph_2->getY());
+
+      ui -> graph2 ->addGraph();
+      ui -> graph2 -> graph(2) -> setData(inter_graph_3->getX(), inter_graph_3->getY());
+
+      ui -> graph2 ->addGraph();
+      ui -> graph2 -> graph(3) -> setData(inter_graph_4->getX(), inter_graph_4->getY());
+
       // give the axes some labels:
       ui -> graph2 ->xAxis->setLabel("x");
       ui -> graph2 ->yAxis->setLabel("y");
       // set axes ranges, so we see all data:
-      ui->graph2->xAxis->setRange(-10, 10);
-      ui->graph2->yAxis->setRange(-10, 10);
+      ui->graph2->xAxis->setRange(-20, 20);
+      ui->graph2->yAxis->setRange(-40, 40);
+
+      //randonmly assign graph color
+      int j = rand() % 4;
+
+      int k = rand() % 4;
+      while(k==j){k = rand() % 4;}
+
+      int l = rand() % 4;
+      while(l==j || l==k){l = rand() % 4;}
+
+
+      int m = rand() % 4;
+      while (m ==j || m==k || m==l){m = rand() % 4;}
+
+
+      ui -> graph2 -> graph(j)->setPen(QPen(Qt::blue));
+      ui -> graph2 -> graph(k)->setPen(QPen(Qt::red));
+      ui -> graph2 -> graph(l)->setPen(QPen(Qt::green));
+      ui -> graph2 -> graph(m)->setPen(QPen(Qt::cyan));
+
       ui->graph2->replot();
+
     }
 
     //difficult
     if(diff_3 ->isChecked()){
         polynomial_order = poly_order ->value();
+        std::vector <int> all_other_degrees;
+        for (int i = 1; i < 5; i++) {
+            if(i != polynomial_order){
+                all_other_degrees.push_back(i);
+            }
+        }
+
         _stackedWidget -> setCurrentIndex(3);
         graph = new Function(polynomial_order, "difficult");
+
+        Function * diff_graph_2 = new Function (all_other_degrees[0], "difficult");
+        Function * diff_graph_3 = new Function (all_other_degrees[1], "difficult");
+        Function * diff_graph_4 = new Function (all_other_degrees[2], "difficult");
 
         // read function into stringstream from print function
         std::stringstream func_reader ;
@@ -370,14 +471,47 @@ void Dialog::goToPage2(){
         std::string s = func_reader.str(); // string is given all stringstream content
         page4_label -> setText(QString::fromUtf8(s.c_str())); // text in label is set by converting c_string into QString
 
+        //real graph
         ui -> graph3 ->addGraph();
         ui -> graph3 -> graph(0) -> setData(graph->getX(), graph->getY());
+
+        //insert fake graphs
+        ui -> graph3 ->addGraph();
+        ui -> graph3 -> graph(1) -> setData(diff_graph_2->getX(), diff_graph_2->getY());
+
+        ui -> graph3 ->addGraph();
+        ui -> graph3 -> graph(2) -> setData(diff_graph_3->getX(), diff_graph_3->getY());
+
+        ui -> graph3 ->addGraph();
+        ui -> graph3 -> graph(3) -> setData(diff_graph_4->getX(), diff_graph_4->getY());
+
         // give the axes some labels:
         ui -> graph3 ->xAxis->setLabel("x");
         ui -> graph3 ->yAxis->setLabel("y");
         // set axes ranges, so we see all data:
-        ui->graph3->xAxis->setRange(-10, 10);
-        ui->graph3->yAxis->setRange(-10, 10);
+        ui->graph3->xAxis->setRange(-20, 20);
+        ui->graph3->yAxis->setRange(-40, 40);
+
+        //randonmly assign color
+           int j = rand() % 4;
+
+           int k = rand() % 4;
+           while(k==j){k = rand() % 4;}
+
+           int l = rand() % 4;
+           while(l==j || l==k){l = rand() % 4;}
+
+
+           int m = rand() % 4;
+           while (m ==j || m==k || m==l){m = rand() % 4;}
+
+
+           ui -> graph3 -> graph(j)->setPen(QPen(Qt::blue));
+           ui -> graph3 -> graph(k)->setPen(QPen(Qt::red));
+           ui -> graph3 -> graph(l)->setPen(QPen(Qt::green));
+           ui -> graph3 -> graph(m)->setPen(QPen(Qt::cyan));
+
+
         ui->graph3->replot();
     }
 
