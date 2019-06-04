@@ -46,6 +46,7 @@ public slots:
     void graph_clicked1();
     void graph_clicked2();
     void graph_clicked3();
+    void ExitGame();
 
 
 private:
@@ -53,6 +54,7 @@ private:
     QRadioButton * diff_1;
     QRadioButton * diff_2;
     QRadioButton * diff_3;
+    QCheckBox * hide_axis;
     Function * graph;
     QVBoxLayout * graph_display;
 

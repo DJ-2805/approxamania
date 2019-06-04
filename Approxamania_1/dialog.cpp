@@ -59,12 +59,18 @@ Dialog::Dialog(QWidget *parent) :
 
     QVBoxLayout *firstPageLayout = new QVBoxLayout(firstPage);
 
+    QHBoxLayout * axis_hiderLayout = new QHBoxLayout;
+    hide_axis = new QCheckBox("Hide axis (for added difficulty)");
+    axis_hiderLayout -> addWidget(hide_axis);
+
+
     firstPageLayout-> addWidget(welcome_label);
     firstPageLayout-> addWidget(instruction_label);
     firstPageLayout-> addWidget(poly_order);
     firstPageLayout-> addWidget(diff_1);
     firstPageLayout-> addWidget(diff_2);
     firstPageLayout-> addWidget(diff_3);
+    firstPageLayout -> addLayout(axis_hiderLayout);
     firstPageLayout -> addWidget(page2PushButton);
     firstPageLayout -> addLayout(help_and_muteLayout);
 
@@ -321,6 +327,8 @@ Dialog::Dialog(QWidget *parent) :
     //post-game connections
     connect(restartButton1, SIGNAL(clicked()), this, SLOT(goToHome()));
     connect(restartButton2, SIGNAL(clicked()), this, SLOT(goToHome()));
+    connect(exitButton1,SIGNAL(clicked()), this, SLOT(ExitGame()));
+    connect(exitButton2,SIGNAL(clicked()), this, SLOT(ExitGame()));
 
 }
 
@@ -355,6 +363,12 @@ void Dialog::goToPage2(){
        // real graph
 
        ui -> graph1 -> setInteraction(QCP::iSelectPlottables);
+
+       if(hide_axis -> isChecked()){
+       ui -> graph1 -> axisRect() -> setAutoMargins(QCP::msNone);
+       ui -> graph1 -> axisRect()->setMargins(QMargins(0,0,0,0));
+       }
+
        ui -> graph1 ->addGraph();
        ui -> graph1 -> graph(0) -> setData(graph->getX(), graph->getY());
        // insert fake graphs
@@ -399,6 +413,11 @@ void Dialog::goToPage2(){
       _stackedWidget -> setCurrentIndex(2);
 
       graph = new Function(polynomial_order, "intermediate");
+
+      if(hide_axis -> isChecked()){
+      ui -> graph2 -> axisRect() -> setAutoMargins(QCP::msNone);
+      ui -> graph2 -> axisRect() -> setMargins(QMargins(0,0,0,0));
+      }
 
       // read function into stringstream from print function
       std::stringstream func_reader ;
@@ -477,6 +496,11 @@ void Dialog::goToPage2(){
         ui -> graph3 -> graph(0) -> setData(graph->getX(), graph->getY());
         ui -> graph3 -> setInteraction(QCP::iSelectPlottables);
 
+        if(hide_axis -> isChecked()){
+        ui -> graph3 -> axisRect() -> setAutoMargins(QCP::msNone);
+        ui -> graph3 -> axisRect()->setMargins(QMargins(0,0,0,0));
+        }
+
         //insert fake graphs
         ui -> graph3 ->addGraph();
         ui -> graph3 -> graph(1) -> setData(diff_graph_2->getX(), diff_graph_2->getY());
@@ -525,6 +549,8 @@ void Dialog::goToHome(){
     heart_pic_label21 -> setVisible(true);
     heart_pic_label31 -> setVisible(true);
     hearts = {1,2,3};
+
+
 }
 
 void Dialog::goToHelpPage(){
@@ -550,16 +576,18 @@ qDebug() << "graph click registered";
 
     qDebug() << "list of graphs initialized";
 
+
     bool selected_right_graph = graphs_list.contains(ui -> graph1 -> graph(0));
 
     while(continuing_to_guess_wrong){
 
-        if(!selected_right_graph && hearts.size()==3){
+        if(!selected_right_graph && hearts.size()==3 && graphs_list.size() != 0){
             qDebug() << "no graph removed - clicked on wrong graph - 3";
             heart_pic_label31 -> setVisible(false);
             qDebug() << "heart removed from heart_layout";
             hearts.pop_back();
             qDebug() << "vector size updated";
+
             continuing_to_guess_wrong =false;
             qDebug() << "bool set false ";
         }
@@ -592,7 +620,7 @@ qDebug() << "graph click registered";
             _stackedWidget -> setCurrentIndex(5);
             continuing_to_guess_wrong =false;
         }
-
+        continuing_to_guess_wrong = false;
   }
 
 }
@@ -611,7 +639,7 @@ void Dialog::graph_clicked2(){
 
         while(continuing_to_guess_wrong){
 
-            if(!selected_right_graph && hearts.size()==3){
+            if(!selected_right_graph && hearts.size()==3 && graphs_list.size() != 0){
                 qDebug() << "no graph removed - clicked on wrong graph - 3";
                 heart_pic_label22 -> setVisible(false);
                 qDebug() << "heart removed from heart_layout";
@@ -621,7 +649,7 @@ void Dialog::graph_clicked2(){
                 qDebug() << "bool set false ";
             }
 
-            else if(!selected_right_graph && hearts.size()==2){
+            else if(!selected_right_graph && hearts.size()==2&& graphs_list.size() != 0){
                 qDebug() << " no graph removed - clicked on wrong graph - 2\n";
                 heart_pic_label12 -> setVisible(false);
                 qDebug() << "heart removed from heart_layout\n";
@@ -641,7 +669,7 @@ void Dialog::graph_clicked2(){
                 _stackedWidget -> setCurrentIndex(5);
                 continuing_to_guess_wrong =false;
             }
-
+            continuing_to_guess_wrong = false;
       }
 
     }
@@ -659,7 +687,7 @@ void Dialog::graph_clicked3(){
 
         while(continuing_to_guess_wrong){
 
-            if(!selected_right_graph && hearts.size()==3){
+            if(!selected_right_graph && hearts.size()==3  && graphs_list.size() != 0){
                 qDebug() << "no graph removed - clicked on wrong graph - 3";
                 heart_pic_label13 -> setVisible(false);
                 qDebug() << "heart removed from heart_layout";
@@ -668,8 +696,6 @@ void Dialog::graph_clicked3(){
                 _stackedWidget -> setCurrentIndex(6);
                 continuing_to_guess_wrong =false;
                 qDebug() << "bool set false ";
-            }
-
             }
 
             if(selected_right_graph){
@@ -683,8 +709,14 @@ void Dialog::graph_clicked3(){
                 _stackedWidget -> setCurrentIndex(5);
                 continuing_to_guess_wrong =false;
             }
+            continuing_to_guess_wrong = false;
 
       }
+}
+
+void Dialog::ExitGame(){
+    exit(1);
+}
 
 Dialog::~Dialog()
 {

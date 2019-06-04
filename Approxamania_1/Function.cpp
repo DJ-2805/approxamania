@@ -37,6 +37,8 @@ Function::Function(int power, std::string difficulty)
          m_factor = (rand() % 15) - 8;
   } while(m_factor == 0);
 
+
+
   m_y.resize(size/step);
   for(i = 0; i < m_y.size();i++)
     m_y[i] = f(m_x[i]);
