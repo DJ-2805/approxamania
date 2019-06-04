@@ -18,7 +18,10 @@
 #include <cassert>
 #include <algorithm>
 #include <vector>
+#include <QList>
+#include <QDebug>
 #include "Function.h"
+#include "ui_dialog.h"
 
 
 namespace Ui {
@@ -40,8 +43,9 @@ public slots:
     void goToHelpPage();
     void muteMedia();
     void unMuteMedia();
-    void show_graph_data(Function * graphx);
-    void hide_graph_data(Function * graphx);
+    void graph_clicked1();
+    void graph_clicked2();
+    void graph_clicked3();
 
 
 private:
@@ -49,25 +53,33 @@ private:
     QRadioButton * diff_1;
     QRadioButton * diff_2;
     QRadioButton * diff_3;
-    Function * graph ;
+    Function * graph;
     QVBoxLayout * graph_display;
+
+    QGridLayout * SimplePageLayout;
+    QGridLayout * IntermediatePageLayout;
+    QGridLayout * DifficultPageLayout;
+
     QSpinBox * poly_order;
     QLabel * page2_label;
     QLabel * page3_label;
     QLabel * page4_label;
-    QHBoxLayout * hearts_layout1;
-    QHBoxLayout * hearts_layout2;
-    QHBoxLayout * hearts_layout3;
     QLabel * heart_pic_label11;
     QLabel * heart_pic_label21;
     QLabel * heart_pic_label31;
+    std::vector<int> hearts = {1,2, 3};
     QLabel * heart_pic_label12;
     QLabel * heart_pic_label22;
     QLabel * heart_pic_label13;
     QMediaPlayer* music;
+    QList < QCPGraph * > graphs_list;
     Ui::Dialog *ui;
     int x = 0;
     int polynomial_order = 0;
+
+    QPushButton * guess_button1;
+    QPushButton * guess_button2;
+    QPushButton * guess_button3;
 };
 
 #endif // DIALOG_H
