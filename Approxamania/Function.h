@@ -40,6 +40,7 @@ class Function {
   QVector<double> m_y;
   double m_zero;
   double m_error;
+  double m_factor;
   int m_power;
   double m_userError;
   std::string m_difficulty;
