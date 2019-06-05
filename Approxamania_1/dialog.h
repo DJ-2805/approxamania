@@ -20,6 +20,7 @@
 #include <vector>
 #include <QList>
 #include <QDebug>
+#include <sstream>
 #include "Function.h"
 #include "ui_dialog.h"
 
@@ -61,6 +62,13 @@ private:
     QGridLayout * SimplePageLayout;
     QGridLayout * IntermediatePageLayout;
     QGridLayout * DifficultPageLayout;
+    QGridLayout * winPageLayout;
+    QGridLayout * finalwinPageLayout;
+    QGridLayout * losePageLayout;
+    QHBoxLayout * restart_and_exitLayout1;
+    QHBoxLayout * restart_and_exitLayout2;
+    QHBoxLayout * restart_and_exitLayout3;
+
 
     QSpinBox * poly_order;
     QLabel * page2_label;
@@ -82,6 +90,12 @@ private:
     QPushButton * guess_button1;
     QPushButton * guess_button2;
     QPushButton * guess_button3;
+
+    QLabel * lose_info_label;
+
+    QLabel * congrats_label1;
+    QLabel * congrats_label2;
+    QPushButton * next_levelButton;
 };
 
 #endif // DIALOG_H
