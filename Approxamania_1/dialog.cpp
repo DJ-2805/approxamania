@@ -11,6 +11,7 @@ Dialog::Dialog(QWidget *parent) :
 
     this -> setFixedSize(1250,750);
 
+
     //song
     music = new QMediaPlayer();
 
@@ -45,14 +46,21 @@ Dialog::Dialog(QWidget *parent) :
     poly_order = new QSpinBox;
     poly_order -> setRange(1,4);
 
-
     diff_1 = new QRadioButton("Simple");
-    diff_1 -> setStyleSheet("background-color: black");
-
+//    diff_1 -> setStyleSheet("background-color: cyan");
     diff_2 = new QRadioButton("Intermediate");
-    diff_2 -> setStyleSheet("background-color: black");
+//    diff_2 -> setStyleSheet("background-color: cyan");
     diff_3 = new QRadioButton("Difficult");
-    diff_3 -> setStyleSheet("background-color: black");
+//    diff_3 -> setStyleSheet("background-color: cyan");
+
+    QGroupBox * groupBox = new QGroupBox("Select Difficulty");
+    QVBoxLayout * difficulty_layout  = new QVBoxLayout;
+    difficulty_layout -> addWidget(diff_1);
+    difficulty_layout -> addWidget(diff_2);
+    difficulty_layout -> addWidget(diff_3);
+    groupBox -> setLayout(difficulty_layout);
+    groupBox -> setStyleSheet("background-color: black;");
+
 
     QPushButton * page2PushButton = new QPushButton("Graph Polynomial");
     QPushButton * homeToHelpButton = new QPushButton("Help");
@@ -70,19 +78,26 @@ Dialog::Dialog(QWidget *parent) :
 
     QVBoxLayout *firstPageLayout = new QVBoxLayout(firstPage);
 
-    QHBoxLayout * axis_hiderLayout = new QHBoxLayout;
-    hide_axis = new QCheckBox("Hide axes (for added difficulty)");
-    hide_axis -> setStyleSheet("background-color: purple");
-    axis_hiderLayout -> addWidget(hide_axis);
+    game_changer1 = new QRadioButton("Guess the Graph");
+//    game_changer1 -> setStyleSheet("background-color: purple");
+    game_changer2 = new QRadioButton("Guess the Zeroes");
+//    game_changer2 -> setStyleSheet("background-color: purple");
 
+    QGroupBox * groupBox1 = new QGroupBox ("Select Game");
+    QVBoxLayout * game_choice_layout = new QVBoxLayout;
+    game_choice_layout -> addWidget(game_changer1);
+    game_choice_layout -> addWidget(game_changer2);
+
+    groupBox1 -> setLayout(game_choice_layout);
+    groupBox1 -> setStyleSheet("background-color: black;");
 
     firstPageLayout-> addWidget(welcome_label);
     firstPageLayout-> addWidget(instruction_label);
     firstPageLayout-> addWidget(poly_order);
-    firstPageLayout-> addWidget(diff_1);
-    firstPageLayout-> addWidget(diff_2);
-    firstPageLayout-> addWidget(diff_3);
-    firstPageLayout -> addLayout(axis_hiderLayout);
+    firstPageLayout-> addWidget(groupBox1);
+
+    firstPageLayout-> addWidget(groupBox);
+
     firstPageLayout -> addWidget(page2PushButton);
     firstPageLayout -> addLayout(help_and_muteLayout);
 
@@ -96,23 +111,23 @@ Dialog::Dialog(QWidget *parent) :
     livesLabel1 -> setAlignment(Qt::AlignCenter);
     livesLabel1 -> setStyleSheet("font: 30pt;");
 
-    heart_pic_label11 = new QLabel ;
-    QPixmap heart_lives_picture1 (":/img/img/heart3d.png");
-    heart_pic_label11 -> setPixmap( heart_lives_picture1);
-    heart_pic_label11 -> setScaledContents(true);
-    heart_pic_label11 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
+    heart_pic_label_1_1 = new QLabel ;
+    QPixmap heart_lives_picture_1_1 (":/img/img/heart3d.png");
+    heart_pic_label_1_1 -> setPixmap( heart_lives_picture_1_1);
+    heart_pic_label_1_1 -> setScaledContents(true);
+    heart_pic_label_1_1 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
 
-    heart_pic_label21 = new QLabel ;
-    QPixmap heart_lives_picture2 (":/img/img/heart3d.png");
-    heart_pic_label21 -> setPixmap( heart_lives_picture1);
-    heart_pic_label21 -> setScaledContents(true);
-    heart_pic_label21 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
+    heart_pic_label_1_2 = new QLabel ;
+    QPixmap heart_lives_picture_1_2 (":/img/img/heart3d.png");
+    heart_pic_label_1_2 -> setPixmap( heart_lives_picture_1_2);
+    heart_pic_label_1_2 -> setScaledContents(true);
+    heart_pic_label_1_2 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
 
-    heart_pic_label31 = new QLabel ;
-    QPixmap heart_lives_picture3 (":/img/img/heart3d.png");
-    heart_pic_label31 -> setPixmap( heart_lives_picture1);
-    heart_pic_label31 -> setScaledContents(true);
-    heart_pic_label31 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
+    heart_pic_label_1_3 = new QLabel ;
+    QPixmap heart_lives_picture_1_3 (":/img/img/heart3d.png");
+    heart_pic_label_1_3 -> setPixmap( heart_lives_picture_1_3);
+    heart_pic_label_1_3 -> setScaledContents(true);
+    heart_pic_label_1_3 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
 
     page2_label = new QLabel;
 
@@ -132,41 +147,41 @@ Dialog::Dialog(QWidget *parent) :
     mute_options_layout2 -> addWidget(page2MuteButton);
     mute_options_layout2 -> addWidget(page2UnmuteButton);
 
-    SimplePageLayout = new QGridLayout(simplePage);
+    SimplePageLayoutG = new QGridLayout(simplePage);
 
     page2_label -> setStyleSheet("font: 30pt;");
 
-    SimplePageLayout -> addWidget(page2_label, 3, 6, 1, 3);
-    SimplePageLayout -> addWidget(livesLabel1,0,6,1, 3 );
-    SimplePageLayout -> addWidget(heart_pic_label11, 1, 6);
-    SimplePageLayout -> addWidget(heart_pic_label21, 1, 7);
-    SimplePageLayout -> addWidget(heart_pic_label31, 1, 8);
-    SimplePageLayout -> addWidget(guess_label1, 6,6,2, 3 );
-    SimplePageLayout -> addWidget(guess_button1, 7, 2, 1, 4);
-    SimplePageLayout -> addWidget(ui->graph1, 0, 0, 6, 6);
-    SimplePageLayout -> addWidget(page2ToHomeButton, 6, 0, 1, 6);
-    SimplePageLayout -> addLayout(mute_options_layout2, 7, 0, 1,2);
+    SimplePageLayoutG -> addWidget(page2_label, 3, 6, 1, 3);
+    SimplePageLayoutG -> addWidget(livesLabel1,0,6,1, 3 );
+    SimplePageLayoutG -> addWidget(heart_pic_label_1_1, 1, 6);
+    SimplePageLayoutG -> addWidget(heart_pic_label_1_2, 1, 7);
+    SimplePageLayoutG -> addWidget(heart_pic_label_1_3, 1, 8);
+    SimplePageLayoutG -> addWidget(guess_label1, 6,6,2, 3 );
+    SimplePageLayoutG -> addWidget(guess_button1, 7, 2, 1, 4);
+    SimplePageLayoutG -> addWidget(ui->graph1, 0, 0, 6, 6);
+    SimplePageLayoutG -> addWidget(page2ToHomeButton, 6, 0, 1, 6);
+    SimplePageLayoutG -> addLayout(mute_options_layout2, 7, 0, 1,2);
 
 // widget three - intermediate
     QWidget * IntermediatePage= new QWidget;
     QLabel * livesLabel2 = new QLabel ("Lives Remaining");
     QFont f2 = livesLabel2 -> font();
     f2.setUnderline(true);
-    livesLabel2-> setFont(f1);
+    livesLabel2-> setFont(f2);
     livesLabel2-> setAlignment(Qt::AlignCenter);
     livesLabel2-> setStyleSheet("font: 30pt;");
-    IntermediatePageLayout = new QGridLayout(IntermediatePage);
+    IntermediatePageLayoutG = new QGridLayout(IntermediatePage);
 
-    heart_pic_label12 = new QLabel ;
-    QPixmap heart_lives_picture12 (":/img/img/heart3d.png");
-    heart_pic_label12 -> setPixmap( heart_lives_picture1);
-    heart_pic_label12 -> setScaledContents(true);
-    heart_pic_label12 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
-    heart_pic_label22 = new QLabel ;
-    QPixmap heart_lives_picture22 (":/img/img/heart3d.png");
-    heart_pic_label22 -> setPixmap( heart_lives_picture1);
-    heart_pic_label22 -> setScaledContents(true);
-    heart_pic_label22 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
+    heart_pic_label_2_1 = new QLabel ;
+    QPixmap heart_lives_picture_2_1 (":/img/img/heart3d.png");
+    heart_pic_label_2_1 -> setPixmap( heart_lives_picture_2_1);
+    heart_pic_label_2_1 -> setScaledContents(true);
+    heart_pic_label_2_1 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
+    heart_pic_label_2_2 = new QLabel ;
+    QPixmap heart_lives_picture_2_2 (":/img/img/heart3d.png");
+    heart_pic_label_2_2 -> setPixmap( heart_lives_picture_2_2);
+    heart_pic_label_2_2 -> setScaledContents(true);
+    heart_pic_label_2_2 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
 
     page3_label = new QLabel;
     page3_label -> setStyleSheet("font: 30pt;");
@@ -188,15 +203,15 @@ Dialog::Dialog(QWidget *parent) :
     mute_options_layout3 -> addWidget(page3MuteButton);
     mute_options_layout3 -> addWidget(page3UnmuteButton);
 
-    IntermediatePageLayout -> addWidget(page3_label, 2, 6, 1, 3);
-    IntermediatePageLayout -> addWidget(livesLabel2,0,6,1, 3 );
-    IntermediatePageLayout -> addWidget(heart_pic_label12, 1, 6);
-    IntermediatePageLayout -> addWidget(heart_pic_label22, 1, 7);
-    IntermediatePageLayout -> addWidget(guess_label2, 5,6,2, 3 );
-    IntermediatePageLayout -> addWidget(guess_button2, 7,2,1, 4);
-    IntermediatePageLayout -> addWidget(ui->graph2, 0, 0, 6, 6);
-    IntermediatePageLayout -> addWidget(page3ToHomeButton, 6, 0, 1, 6);
-    IntermediatePageLayout -> addLayout(mute_options_layout3, 7, 0, 1, 2);
+    IntermediatePageLayoutG -> addWidget(page3_label, 2, 6, 1, 3);
+    IntermediatePageLayoutG -> addWidget(livesLabel2,0,6,1, 3 );
+    IntermediatePageLayoutG -> addWidget(heart_pic_label_2_1, 1, 6);
+    IntermediatePageLayoutG -> addWidget(heart_pic_label_2_2, 1, 7);
+    IntermediatePageLayoutG -> addWidget(guess_label2, 5,6,2, 3 );
+    IntermediatePageLayoutG -> addWidget(guess_button2, 7,2,1, 4);
+    IntermediatePageLayoutG -> addWidget(ui->graph2, 0, 0, 6, 6);
+    IntermediatePageLayoutG -> addWidget(page3ToHomeButton, 6, 0, 1, 6);
+    IntermediatePageLayoutG -> addLayout(mute_options_layout3, 7, 0, 1, 2);
 
 // widget four - difficult
     QWidget * DifficultPage = new QWidget;
@@ -207,12 +222,12 @@ Dialog::Dialog(QWidget *parent) :
     livesLabel3-> setFont(f3);
     livesLabel3-> setAlignment(Qt::AlignCenter);
     livesLabel3-> setStyleSheet("font: 30pt;");
-    DifficultPageLayout = new QGridLayout (DifficultPage);
-    heart_pic_label13 = new QLabel ;
-    QPixmap heart_lives_picture13 (":/img/img/heart3d.png");
-    heart_pic_label13 -> setPixmap( heart_lives_picture1);
-    heart_pic_label13 -> setScaledContents(true);
-    heart_pic_label13 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
+    DifficultPageLayoutG = new QGridLayout (DifficultPage);
+    heart_pic_label_3_1 = new QLabel ;
+    QPixmap heart_lives_picture_3_1 (":/img/img/heart3d.png");
+    heart_pic_label_3_1 -> setPixmap( heart_lives_picture_3_1);
+    heart_pic_label_3_1 -> setScaledContents(true);
+    heart_pic_label_3_1 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
 
     page4_label = new QLabel;
     page4_label -> setStyleSheet("font: 30pt;");
@@ -234,14 +249,14 @@ Dialog::Dialog(QWidget *parent) :
     mute_options_layout4 -> addWidget(page4MuteButton);
     mute_options_layout4 -> addWidget(page4UnmuteButton);
 
-    DifficultPageLayout -> addWidget(page4_label, 3, 6, 1, 3);
-    DifficultPageLayout -> addWidget(livesLabel3, 0, 6, 1, 3);
-    DifficultPageLayout -> addWidget(heart_pic_label13, 1, 6);
-    DifficultPageLayout -> addWidget(guess_label3, 5,6,2, 3 );
-    DifficultPageLayout -> addWidget(guess_button3, 7,2,1,4);
-    DifficultPageLayout -> addWidget(ui->graph3, 0, 0, 6, 6);
-    DifficultPageLayout -> addWidget(page4ToHomeButton, 6, 0, 1, 6);
-    DifficultPageLayout -> addLayout(mute_options_layout4, 7, 0, 1, 2);
+    DifficultPageLayoutG -> addWidget(page4_label, 3, 6, 1, 3);
+    DifficultPageLayoutG -> addWidget(livesLabel3, 0, 6, 1, 3);
+    DifficultPageLayoutG -> addWidget(heart_pic_label_3_1, 1, 6);
+    DifficultPageLayoutG -> addWidget(guess_label3, 5,6,2, 3 );
+    DifficultPageLayoutG -> addWidget(guess_button3, 7,2,1,4);
+    DifficultPageLayoutG -> addWidget(ui->graph3, 0, 0, 6, 6);
+    DifficultPageLayoutG -> addWidget(page4ToHomeButton, 6, 0, 1, 6);
+    DifficultPageLayoutG -> addLayout(mute_options_layout4, 7, 0, 1, 2);
 
 // widget five
 
@@ -329,6 +344,8 @@ Dialog::Dialog(QWidget *parent) :
     QLabel * congrats_label2 = new QLabel ("<h1> Congratulations, you won!</h1>");
     congrats_label2 -> setAlignment(Qt::AlignCenter);
 
+    QPushButton * next_degreeButton = new QPushButton ("Play again with Higher Degree");
+
     restart_and_exitLayout3 = new QHBoxLayout;
     QPushButton * restartButton3 = new QPushButton("Restart game");
     QPushButton * exitButton3 = new QPushButton("Exit game");
@@ -338,8 +355,142 @@ Dialog::Dialog(QWidget *parent) :
 
     finalwinPageLayout = new QGridLayout(finalwinPage);
     finalwinPageLayout -> addWidget(congrats_label2, 1, 0);
+    finalwinPageLayout -> addWidget(next_degreeButton, 2, 0);
     finalwinPageLayout -> addLayout(restart_and_exitLayout3, 3,0 );
 
+
+// widget 9 - guess zero page
+    QWidget * guesszeroPage_S = new QWidget;
+
+    QLabel * livesLabel4 = new QLabel ("Lives Remaining");
+    QFont f4 = livesLabel4 -> font();
+    f4.setUnderline(true);
+    livesLabel4 -> setFont(f4);
+    livesLabel4 -> setAlignment(Qt::AlignCenter);
+    livesLabel4 -> setStyleSheet("font: 30pt;");
+
+    heart_pic_label_4_1 = new QLabel ;
+    QPixmap heart_lives_picture_4_1 (":/img/img/heart3d.png");
+    heart_pic_label_4_1 -> setPixmap( heart_lives_picture_4_1);
+    heart_pic_label_4_1 -> setScaledContents(true);
+    heart_pic_label_4_1 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
+
+    heart_pic_label_4_2= new QLabel ;
+    QPixmap heart_lives_picture_4_2 (":/img/img/heart3d.png");
+    heart_pic_label_4_2 -> setPixmap( heart_lives_picture_4_2);
+    heart_pic_label_4_2 -> setScaledContents(true);
+    heart_pic_label_4_2 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
+
+    heart_pic_label_4_3 = new QLabel ;
+    QPixmap heart_lives_picture_4_3 (":/img/img/heart3d.png");
+    heart_pic_label_4_3 -> setPixmap( heart_lives_picture_4_3);
+    heart_pic_label_4_3 -> setScaledContents(true);
+    heart_pic_label_4_3 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
+
+    QLineEdit * number_of_zeroes_input1 = new QLineEdit();
+    number_of_zeroes_input1->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+
+    QPushButton * page9ToHomeButton = new QPushButton ("Reset");
+    QPushButton * page9MuteButton = new QPushButton("Mute music");
+    QPushButton * page9UnmuteButton = new QPushButton ("Unmute music");
+
+    QHBoxLayout * mute_options_layout9 = new QHBoxLayout;
+    mute_options_layout9 -> addWidget(page9MuteButton);
+    mute_options_layout9 -> addWidget(page9UnmuteButton);
+
+    SimplePageLayoutZ = new QGridLayout(guesszeroPage_S);
+
+    SimplePageLayoutZ -> addWidget(ui->graph4, 0, 0, 6, 6);
+    SimplePageLayoutZ -> addWidget(livesLabel4, 0, 6, 1, 3);
+    SimplePageLayoutZ -> addWidget(heart_pic_label_4_1, 1, 6);
+    SimplePageLayoutZ -> addWidget(heart_pic_label_4_2, 1, 7);
+    SimplePageLayoutZ -> addWidget(heart_pic_label_4_3, 1, 8);
+    SimplePageLayoutZ -> addWidget(number_of_zeroes_input1, 2, 7, 1, 1);
+
+    SimplePageLayoutZ -> addWidget(page9ToHomeButton, 6, 0, 1, 6);
+    SimplePageLayoutZ -> addLayout(mute_options_layout9, 7, 0, 1, 2);
+
+
+
+// widget 10 - guess zero page
+    QWidget * guesszeroPage_I = new QWidget;
+
+    QLabel * livesLabel5 = new QLabel ("Lives Remaining");
+    QFont f5 = livesLabel5 -> font();
+    f5.setUnderline(true);
+    livesLabel5 -> setFont(f5);
+    livesLabel5 -> setAlignment(Qt::AlignCenter);
+    livesLabel5 -> setStyleSheet("font: 30pt;");
+
+    heart_pic_label_5_1 = new QLabel ;
+    QPixmap heart_lives_picture_5_1 (":/img/img/heart3d.png");
+    heart_pic_label_5_1 -> setPixmap( heart_lives_picture_5_1);
+    heart_pic_label_5_1 -> setScaledContents(true);
+    heart_pic_label_5_1 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
+
+    heart_pic_label_5_2= new QLabel ;
+    QPixmap heart_lives_picture_5_2 (":/img/img/heart3d.png");
+    heart_pic_label_5_2 -> setPixmap( heart_lives_picture_5_2);
+    heart_pic_label_5_2 -> setScaledContents(true);
+    heart_pic_label_5_2 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
+
+    QPushButton * page10ToHomeButton = new QPushButton ("Reset");
+    QPushButton * page10MuteButton = new QPushButton("Mute music");
+    QPushButton * page10UnmuteButton = new QPushButton ("Unmute music");
+
+    QHBoxLayout * mute_options_layout10 = new QHBoxLayout;
+    mute_options_layout10 -> addWidget(page9MuteButton);
+    mute_options_layout10 -> addWidget(page9UnmuteButton);
+
+    QLineEdit * number_of_zeroes_input2 = new QLineEdit();
+    number_of_zeroes_input2->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+
+    IntermediatePageLayoutZ = new QGridLayout(guesszeroPage_I);
+
+    IntermediatePageLayoutZ -> addWidget(ui->graph5, 0, 0, 6, 6);
+    IntermediatePageLayoutZ -> addWidget(livesLabel5, 0, 6, 1, 3);
+    IntermediatePageLayoutZ -> addWidget(heart_pic_label_5_1, 1, 6);
+    IntermediatePageLayoutZ -> addWidget(heart_pic_label_5_2, 1, 7);
+    IntermediatePageLayoutZ -> addWidget(number_of_zeroes_input2, 2, 7, 1, 1);
+    IntermediatePageLayoutZ -> addWidget(page10ToHomeButton, 6, 0, 1, 6);
+    IntermediatePageLayoutZ -> addLayout(mute_options_layout10, 7, 0, 1, 2);
+
+
+// widget 11 - guess zero page
+    QWidget * guesszeroPage_D = new QWidget;
+
+    QLabel * livesLabel6 = new QLabel ("Lives Remaining");
+    QFont f6 = livesLabel6 -> font();
+    f6.setUnderline(true);
+    livesLabel6 -> setFont(f6);
+    livesLabel6 -> setAlignment(Qt::AlignCenter);
+    livesLabel6 -> setStyleSheet("font: 30pt;");
+
+    heart_pic_label_6_1 = new QLabel ;
+    QPixmap heart_lives_picture_6_1 (":/img/img/heart3d.png");
+    heart_pic_label_6_1 -> setPixmap( heart_lives_picture_6_1);
+    heart_pic_label_6_1 -> setScaledContents(true);
+    heart_pic_label_6_1 -> setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored );
+
+    QPushButton * page11ToHomeButton = new QPushButton ("Reset");
+    QPushButton * page11MuteButton = new QPushButton("Mute music");
+    QPushButton * page11UnmuteButton = new QPushButton ("Unmute music");
+
+    QHBoxLayout * mute_options_layout11 = new QHBoxLayout;
+    mute_options_layout11 -> addWidget(page9MuteButton);
+    mute_options_layout11 -> addWidget(page9UnmuteButton);
+
+    QLineEdit * number_of_zeroes_input3 = new QLineEdit();
+    number_of_zeroes_input3->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+
+    DifficultPageLayoutZ = new QGridLayout(guesszeroPage_D);
+
+    DifficultPageLayoutZ -> addWidget(ui->graph6, 0, 0, 6, 6);
+    DifficultPageLayoutZ -> addWidget(livesLabel6, 0, 6, 1, 3);
+    DifficultPageLayoutZ -> addWidget(heart_pic_label_6_1, 1, 6);
+    DifficultPageLayoutZ -> addWidget(number_of_zeroes_input3, 2, 7, 1, 1);
+    DifficultPageLayoutZ -> addWidget(page11ToHomeButton, 6, 0, 1, 6);
+    DifficultPageLayoutZ -> addLayout(mute_options_layout11, 7, 0, 1, 2);
 
 // stack
     _stackedWidget = new QStackedWidget;
@@ -351,6 +502,9 @@ Dialog::Dialog(QWidget *parent) :
     _stackedWidget -> addWidget(winPage);
     _stackedWidget -> addWidget(losePage);
     _stackedWidget -> addWidget(finalwinPage);
+    _stackedWidget -> addWidget(guesszeroPage_S);
+    _stackedWidget -> addWidget(guesszeroPage_I);
+    _stackedWidget -> addWidget(guesszeroPage_D);
 
 
 // layout
@@ -368,15 +522,25 @@ Dialog::Dialog(QWidget *parent) :
     connect(page3ToHomeButton,SIGNAL(clicked()), this, SLOT(goToHome()));
     connect(page4ToHomeButton,SIGNAL(clicked()), this, SLOT(goToHome()));
 
+    connect(page9ToHomeButton,SIGNAL(clicked()), this, SLOT(goToHome()));
+    connect(page10ToHomeButton,SIGNAL(clicked()), this, SLOT(goToHome()));
+    connect(page11ToHomeButton,SIGNAL(clicked()), this, SLOT(goToHome()));
+
     connect (MuteButton, SIGNAL(clicked()), this, SLOT(muteMedia()));
     connect (page2MuteButton, SIGNAL(clicked()), this, SLOT(muteMedia()));
     connect (page3MuteButton, SIGNAL(clicked()), this, SLOT(muteMedia()));
     connect (page4MuteButton, SIGNAL(clicked()), this, SLOT(muteMedia()));
+    connect (page9MuteButton, SIGNAL(clicked()), this, SLOT(muteMedia()));
+    connect (page10MuteButton, SIGNAL(clicked()), this, SLOT(muteMedia()));
+    connect (page11MuteButton, SIGNAL(clicked()), this, SLOT(muteMedia()));
 
     connect(UnmuteButton, SIGNAL(clicked()), this, SLOT(unMuteMedia()));
     connect(page2UnmuteButton, SIGNAL(clicked()), this, SLOT(unMuteMedia()));
     connect(page3UnmuteButton, SIGNAL(clicked()), this, SLOT(unMuteMedia()));
     connect(page4UnmuteButton, SIGNAL(clicked()), this, SLOT(unMuteMedia()));
+    connect (page9UnmuteButton, SIGNAL(clicked()), this, SLOT(muteMedia()));
+    connect (page10UnmuteButton, SIGNAL(clicked()), this, SLOT(muteMedia()));
+    connect (page11UnmuteButton, SIGNAL(clicked()), this, SLOT(muteMedia()));
 
     // graph interaction
 
@@ -393,13 +557,65 @@ Dialog::Dialog(QWidget *parent) :
     connect(exitButton3,SIGNAL(clicked()), this, SLOT(ExitGame()));
 
     connect(next_levelButton, SIGNAL(clicked()), this, SLOT(goToPage2()));
+    connect(next_degreeButton, SIGNAL(clicked()), this, SLOT(higherdegreeGame()));
 
 }
 
 void Dialog::goToPage2(){
 
+    hearts = {1, 2, 3};
+    polynomial_order = poly_order -> value();
+
+
+    if(game_changer2 -> isChecked() && diff_1 -> isChecked()){
+        _stackedWidget -> setCurrentIndex(8);
+        graph = new Function(polynomial_order, "simple");
+
+        ui -> graph4 -> setInteraction(QCP::iSelectPlottables);
+        ui -> graph4 -> addGraph();
+        ui -> graph4 -> graph(0) -> setData(graph -> getX(), graph -> getY());
+        ui -> graph4 ->xAxis->setLabel("x");
+        ui -> graph4 ->yAxis->setLabel("y");
+        // set axes ranges, so we see all data:
+        ui->graph4->xAxis->setRange(-20, 20);
+        ui->graph4->yAxis->setRange(-50, 50);
+        ui -> graph4 -> replot();
+    }
+
+    if(game_changer2 -> isChecked() && diff_2 -> isChecked()){
+        _stackedWidget -> setCurrentIndex(9);
+        graph = new Function(polynomial_order, "intermediate");
+
+        ui -> graph5 -> setInteraction(QCP::iSelectPlottables);
+        ui -> graph5 -> addGraph();
+        ui -> graph5 -> graph(0) -> setData(graph -> getX(), graph -> getY());
+        ui -> graph5 ->xAxis->setLabel("x");
+        ui -> graph5 ->yAxis->setLabel("y");
+        // set axes ranges, so we see all data:
+        ui -> graph5->xAxis->setRange(-20, 20);
+        ui -> graph5->yAxis->setRange(-50, 50);
+        ui -> graph5 -> replot();
+    }
+
+    if(game_changer2 -> isChecked() && diff_3 -> isChecked()){
+        _stackedWidget -> setCurrentIndex(10);
+        graph = new Function(polynomial_order, "difficult");
+
+        ui -> graph6 -> setInteraction(QCP::iSelectPlottables);
+        ui -> graph6 -> addGraph();
+        ui -> graph6 -> graph(0) -> setData(graph -> getX(), graph -> getY());
+        ui -> graph6 ->xAxis->setLabel("x");
+        ui -> graph6 ->yAxis->setLabel("y");
+        // set axes ranges, so we see all data:
+        ui->graph6->xAxis->setRange(-20, 20);
+        ui->graph6->yAxis->setRange(-50, 50);
+
+        ui -> graph6 -> replot();
+
+    }
+
     //easy
-    if(diff_1 ->isChecked()){
+    if(game_changer1 -> isChecked() && diff_1 ->isChecked()){
 
         polynomial_order = poly_order ->value();
         std::vector <int> all_other_degrees;
@@ -417,6 +633,9 @@ void Dialog::goToPage2(){
 
        //lose page label text is set
        std::stringstream info_reader;
+       info_reader << "Your Function: ";
+       graph -> printFunc(info_reader);
+       info_reader << "\n\n";
        graph -> printInfo(info_reader);
        std::string info_string = info_reader.str();
        lose_info_label -> setText(QString::fromUtf8(info_string.c_str()));
@@ -435,37 +654,32 @@ void Dialog::goToPage2(){
 
        ui -> graph1 -> setInteraction(QCP::iSelectPlottables);
 
-       if(hide_axis -> isChecked()){
-         ui -> graph1 -> xAxis -> setTickLabels(false);
-         ui -> graph1 -> yAxis -> setTickLabels(false);
-       }
-
        ui -> graph1 ->addGraph();
        ui -> graph1 -> graph(0) -> setData(graph -> getX(), graph -> getY());
        // insert fake graphs
        ui -> graph1 ->addGraph();
        ui -> graph1 -> graph(1) -> setData(easy_graph_2->getX(), easy_graph_2->getY());
 
-           // give the axes some labels:
-           ui -> graph1 ->xAxis->setLabel("x");
-           ui -> graph1 ->yAxis->setLabel("y");
-           // set axes ranges, so we see all data:
-           ui->graph1->xAxis->setRange(-20, 20);
-           ui->graph1->yAxis->setRange(-50, 50);
+       // give the axes some labels:
+       ui -> graph1 ->xAxis->setLabel("x");
+       ui -> graph1 ->yAxis->setLabel("y");
+       // set axes ranges, so we see all data:
+       ui->graph1->xAxis->setRange(-20, 20);
+       ui->graph1->yAxis->setRange(-50, 50);
 
-           //randonmly assign color
-           int j = rand() % 2;
+       //randonmly assign color
+       int j = rand() % 2;
 
-           int k = rand() % 2;
-           while(k==j){k = rand() % 2;}
+       int k = rand() % 2;
+       while(k==j){k = rand() % 2;}
 
-           ui -> graph1 -> graph(j)->setPen(QPen(Qt::cyan));
-           ui -> graph1 -> graph(k)->setPen(QPen(Qt::red));
-           ui->graph1->replot();
+       ui -> graph1 -> graph(j)->setPen(QPen(Qt::cyan));
+       ui -> graph1 -> graph(k)->setPen(QPen(Qt::red));
+       ui->graph1->replot();
     }
 
     //intermediate
-    if(diff_2 ->isChecked()){
+    if(game_changer1 -> isChecked() && diff_2 ->isChecked()){
         polynomial_order = poly_order ->value();
 
 
@@ -485,10 +699,14 @@ void Dialog::goToPage2(){
 
       graph = new Function(polynomial_order, "intermediate");
 
-      if(hide_axis -> isChecked()){
-          ui -> graph2 -> xAxis -> setTickLabels(false);
-          ui -> graph2 -> yAxis -> setTickLabels(false);
-      }
+      //lose page label text is set
+      std::stringstream info_reader;
+      info_reader << "Your Function: ";
+      graph -> printFunc(info_reader);
+      info_reader << "\n\n";
+      graph -> printInfo(info_reader);
+      std::string info_string = info_reader.str();
+      lose_info_label -> setText(QString::fromUtf8(info_string.c_str()));
 
       // read function into stringstream from print function
       std::stringstream func_reader;
@@ -537,7 +755,7 @@ void Dialog::goToPage2(){
     }
 
     //difficult
-    if(diff_3 ->isChecked()){
+    if(game_changer1 -> isChecked() && diff_3 ->isChecked()){
         polynomial_order = poly_order ->value();
 
         //rand here
@@ -555,6 +773,15 @@ void Dialog::goToPage2(){
         Function * diff_graph_3 = new Function (all_other_degrees[1], "difficult");
         Function * diff_graph_4 = new Function (all_other_degrees[2], "difficult");
 
+        //lose page label text is set
+        std::stringstream info_reader;
+        info_reader << "Your Function: ";
+        graph -> printFunc(info_reader);
+        info_reader << "\n\n";
+        graph -> printInfo(info_reader);
+        std::string info_string = info_reader.str();
+        lose_info_label -> setText(QString::fromUtf8(info_string.c_str()));
+
         // read function into stringstream from print function
         std::stringstream func_reader ;
         func_reader << "Function:\n";
@@ -568,11 +795,6 @@ void Dialog::goToPage2(){
         ui -> graph3 ->addGraph();
         ui -> graph3 -> graph(0) -> setData(graph->getX(), graph->getY());
         ui -> graph3 -> setInteraction(QCP::iSelectPlottables);
-
-        if(hide_axis -> isChecked()){
-        ui -> graph3 -> xAxis -> setTickLabels(false);
-        ui -> graph3 -> yAxis -> setTickLabels(false);
-        }
 
         //insert fake graphs
         ui -> graph3 ->addGraph();
@@ -614,6 +836,24 @@ void Dialog::goToPage2(){
         ui->graph3->replot();
     }
 
+//    if(game_changer2 -> isChecked()){
+//        if(diff_1->isChecked()){
+//            qDebug() << "stacked widget - 8";
+//            _stackedWidget -> setCurrentIndex(8);
+//        }
+
+//        if(diff_2->isChecked()){
+//            qDebug() << "stacked widget - 9";
+
+//            _stackedWidget -> setCurrentIndex(9);
+//        }
+
+//        if(diff_3->isChecked()){
+//            qDebug() << "stacked widget - 10";
+
+//            _stackedWidget -> setCurrentIndex(10);
+//        }
+//    }
 }
 
 void Dialog::goToHome(){
@@ -622,24 +862,13 @@ void Dialog::goToHome(){
     _stackedWidget -> setCurrentIndex(0);
 
     // resets hidden hearts
-    heart_pic_label11 -> setVisible(true);
-    heart_pic_label21 -> setVisible(true);
-    heart_pic_label31 -> setVisible(true);
-    heart_pic_label12 -> setVisible(true);
-    heart_pic_label22 -> setVisible(true);
-    heart_pic_label13 -> setVisible(true);
+    heart_pic_label_1_1 -> setVisible(true);
+    heart_pic_label_1_2 -> setVisible(true);
+    heart_pic_label_1_3 -> setVisible(true);
+    heart_pic_label_2_1 -> setVisible(true);
+    heart_pic_label_2_2 -> setVisible(true);
+    heart_pic_label_3_1 -> setVisible(true);
     hearts = {1,2,3};
-
-    // resets hidden axes
-    ui -> graph1 -> xAxis -> setTickLabels(true);
-    ui -> graph1 -> yAxis -> setTickLabels(true);
-    ui -> graph2 -> xAxis -> setTickLabels(true);
-    ui -> graph2 -> yAxis -> setTickLabels(true);
-    ui -> graph3 -> xAxis -> setTickLabels(true);
-    ui -> graph3 -> yAxis -> setTickLabels(true);
-
-    // resets axis hider button
-    hide_axis -> setChecked(false);
 
     //
     diff_1->setAutoExclusive(false);
@@ -687,7 +916,7 @@ qDebug() << "graph click registered";
 
         if(!selected_right_graph && hearts.size()==3 && graphs_list.size() != 0){
             qDebug() << "no graph removed - clicked on wrong graph - 3";
-            heart_pic_label31 -> setVisible(false);
+            heart_pic_label_1_3 -> setVisible(false);
             qDebug() << "heart removed from heart_layout";
             hearts.pop_back();
             qDebug() << "vector size updated";
@@ -701,7 +930,7 @@ qDebug() << "graph click registered";
 
         else if(!selected_right_graph && hearts.size()==2){
             qDebug() << " no graph removed - clicked on wrong graph - 2\n";
-            heart_pic_label21 -> setVisible(false);
+            heart_pic_label_1_2 -> setVisible(false);
             qDebug() << "heart removed from heart_layout\n";
             hearts.pop_back();
             qDebug() << "vector size updated";
@@ -713,7 +942,7 @@ qDebug() << "graph click registered";
 
         else if(!selected_right_graph && hearts.size()==1){
             qDebug() << " no graph removed - clicked on wrong graph - 1\n";
-            heart_pic_label11 -> setVisible(false);
+            heart_pic_label_1_1 -> setVisible(false);
             qDebug() << "heart removed from heart_layout\n";
             hearts.pop_back();
             qDebug() << "vector size updated";
@@ -761,7 +990,7 @@ void Dialog::graph_clicked2(){
 
             if(!selected_right_graph && hearts.size()==3 && graphs_list.size() != 0){
                 qDebug() << "no graph removed - clicked on wrong graph - 3";
-                heart_pic_label22 -> setVisible(false);
+                heart_pic_label_2_2 -> setVisible(false);
                 qDebug() << "heart removed from heart_layout";
                 hearts.pop_back();
                 qDebug() << "vector size updated";
@@ -771,7 +1000,7 @@ void Dialog::graph_clicked2(){
 
             else if(!selected_right_graph && hearts.size()==2&& graphs_list.size() != 0){
                 qDebug() << " no graph removed - clicked on wrong graph - 2\n";
-                heart_pic_label12 -> setVisible(false);
+                heart_pic_label_2_1 -> setVisible(false);
                 qDebug() << "heart removed from heart_layout\n";
                 hearts.pop_back();
                 _stackedWidget -> setCurrentIndex(6);
@@ -805,6 +1034,8 @@ void Dialog::graph_clicked3(){
 
         bool continuing_to_guess_wrong = true;
 
+        hearts = {1, 2, 3};
+
         graphs_list = ui -> graph3 -> selectedGraphs();
 
         qDebug() << "list of graphs initialized";
@@ -815,7 +1046,7 @@ void Dialog::graph_clicked3(){
 
             if(!selected_right_graph && hearts.size()==3  && graphs_list.size() != 0){
                 qDebug() << "no graph removed - clicked on wrong graph - 3";
-                heart_pic_label13 -> setVisible(false);
+                heart_pic_label_3_1 -> setVisible(false);
                 qDebug() << "heart removed from heart_layout";
                 hearts.pop_back();
                 qDebug() << "vector size updated";
@@ -834,6 +1065,7 @@ void Dialog::graph_clicked3(){
                 qDebug() << "replotted";
 
 
+                // final win page
                 _stackedWidget -> setCurrentIndex(7);
                 continuing_to_guess_wrong =false;
             }
@@ -844,6 +1076,12 @@ void Dialog::graph_clicked3(){
 
 void Dialog::ExitGame(){
     exit(1);
+}
+
+// should be paired with spinbox to set the degree of next game called
+void Dialog::higherdegreeGame(){
+    polynomial_order = polynomial_order + 1;
+
 }
 
 Dialog::~Dialog()

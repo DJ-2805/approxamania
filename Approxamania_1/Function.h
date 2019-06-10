@@ -31,13 +31,6 @@ class Function {
    */
   int getPower() const;
   /*
-   * Function getCoefficients
-   * gets coefficients of the function
-   * @param: none
-   * @return: QVector<double>
-   */
-  QVector<double> getCoefficients() const;
-  /*
    * Function getX
    * gets x-values of the function
    * @param: none
@@ -52,42 +45,71 @@ class Function {
    */
   QVector<double> getY() const;
   /*
+   * Function getZeros
+   * gets zeros of the function
+   * @param: none
+   * @return: QVector<double>
+   */
+  QVector<double> getZeros() const;
+  /*
    * Function getZero
-   * gets a zero of the function
+   * gets a random zero from the vector
    * @param: none
    * @return: double
    */
   double getZero() const;
   /*
-   * Function getDiffiulty
-   * gets the difficulty of the function
+   * Function getZero
+   * gets the zero specified at
+   * the index of the vector
+   * @param index: int, index of the vector
+   * @return: double
+   */
+  double getZero(int index) const;
+  /*
+   * Function getCoefficient
+   * gets coefficient of fucntion
+   * @param: none
+   * @return: double
+   */
+  double getCoefficient() const;
+  /*
+   * Function getDifficulty
+   * gets difficulty of game
    * @param: none
    * @return: str
    */
-  std::string getDiffiulty() const;
+  std::string getDifficulty() const;
 
   // ****************************************
   // Other Public Functions
   // ****************************************
   /*
    * Function is_graphed
-   * checks if current curve has a size
+   * checks if current function is plotted
    * @param: none
    * @return: bool
    */
   bool is_graphed() const;
   /*
+   * Function is_zero
+   * checks if given zero is within the vector of zeros
+   * @param zero: double, given zero to check
+   * @return: bool
+   */
+  bool is_zero(double zero) const;
+  /*
    * Function printFunc
    * print out the function in factored format
    * @param: none
-   * @return: str
+   * @return: none
    */
   void printFunc(std::stringstream & x) const;
   /*
    * Function printInfo
-   * prints out information on the specific polynomial
+   * prints general info about current polynomial out
    * @param: none
-   * @return: str
+   * @return: none
    */
   void printInfo(std::stringstream & x) const;
   /*
@@ -108,7 +130,7 @@ class Function {
    */
   ~Function();
  private:
-  /* Function bisectionMethod
+  /* Function bisectionMethod---DEPRECATED
    * will approximate a zero of the function
    * @param start: double,the left bound of interest
    * @param end: double,the right bound of interest
@@ -117,14 +139,14 @@ class Function {
    */
   double bisectionMethod(double start, double end, double error);
 
-  QVector<double> m_coefficients;  // all the zeros of the function
-  QVector<double> m_x;             // x-valeus of the function
-  QVector<double> m_y;             // y-values of the function
-  double m_zero;                   // one approximated zero of the function
-  double m_error;                  // error bound for approximate zero
-  double m_factor;                 // determines whether positive or negative curve
-  int m_power;                     // degree of the polynomial
-  std::string m_difficulty;        // game level
+  QVector<double> m_x;
+  QVector<double> m_y;
+  QVector<double> m_zeros;
+  double m_error;
+  double m_coefficient;
+  int m_power;
+  double m_userError;
+  std::string m_difficulty;
 };
 
-#endif
+#endif /* FUNCTION_H */

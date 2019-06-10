@@ -48,6 +48,7 @@ public slots:
     void graph_clicked2();
     void graph_clicked3();
     void ExitGame();
+    void higherdegreeGame();
 
 
 private:
@@ -55,13 +56,17 @@ private:
     QRadioButton * diff_1;
     QRadioButton * diff_2;
     QRadioButton * diff_3;
-    QCheckBox * hide_axis;
+    QRadioButton * game_changer1;
+    QRadioButton * game_changer2;
     Function * graph;
     QVBoxLayout * graph_display;
 
-    QGridLayout * SimplePageLayout;
-    QGridLayout * IntermediatePageLayout;
-    QGridLayout * DifficultPageLayout;
+    QGridLayout * SimplePageLayoutG;
+    QGridLayout * IntermediatePageLayoutG;
+    QGridLayout * DifficultPageLayoutG;
+    QGridLayout * SimplePageLayoutZ;
+    QGridLayout * IntermediatePageLayoutZ;
+    QGridLayout * DifficultPageLayoutZ;
     QGridLayout * winPageLayout;
     QGridLayout * finalwinPageLayout;
     QGridLayout * losePageLayout;
@@ -74,13 +79,15 @@ private:
     QLabel * page2_label;
     QLabel * page3_label;
     QLabel * page4_label;
-    QLabel * heart_pic_label11;
-    QLabel * heart_pic_label21;
-    QLabel * heart_pic_label31;
     std::vector<int> hearts = {1,2, 3};
-    QLabel * heart_pic_label12;
-    QLabel * heart_pic_label22;
-    QLabel * heart_pic_label13;
+    QLabel * heart_pic_label_1_1;QLabel * heart_pic_label_1_2;QLabel * heart_pic_label_1_3;
+    QLabel * heart_pic_label_2_1;QLabel * heart_pic_label_2_2;
+    QLabel * heart_pic_label_3_1;
+
+    QLabel * heart_pic_label_4_1; QLabel * heart_pic_label_4_2; QLabel * heart_pic_label_4_3;
+    QLabel * heart_pic_label_5_1; QLabel * heart_pic_label_5_2;
+    QLabel * heart_pic_label_6_1;
+
     QMediaPlayer* music;
     QList < QCPGraph * > graphs_list;
     Ui::Dialog *ui;
@@ -95,6 +102,7 @@ private:
 
     QLabel * congrats_label1;
     QLabel * congrats_label2;
+
     QPushButton * next_levelButton;
 };
 

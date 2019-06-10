@@ -7,10 +7,20 @@
 // Constructor
 // ****************************************
 Function::Function(int power, std::string difficulty)
-  :  m_power(power), m_difficulty(difficulty), m_error(0.0001) {
+  :  m_power(power), m_difficulty(difficulty) {
   double step = .01;  // step size between points
   int size = 500;     // size of points to allocate for x,y
   int i;              // iterator used in for loops ahead
+
+  // getting error bound for zero approximations
+  if(m_difficulty == "simple")
+      m_error = 1.5;
+  else if(m_difficulty == "intermediate")
+      m_error = 1.0;
+  else if(m_difficulty == "difficult")
+      m_error = 0.5;
+  else
+      m_error = 0.001;
 
   // allocates the x values for the function
   m_x.resize(size/step);
@@ -21,22 +31,19 @@ Function::Function(int power, std::string difficulty)
   }
 
   // randomly generates coefficients for the polynomial
-  m_coefficients.resize(power);
-  int len = m_coefficients.size();
+  m_zeros.resize(power);
+  int len = m_zeros.size();
   for(i = 0; i < len;i++)
-    m_coefficients[i] = (rand() % 15) - 7;
+    m_zeros[i] = (rand() % 30) - 15;
 
   do {
-    m_factor = (rand() % 15) - 8;
-  } while(m_factor == 0);
+    m_coefficient = (rand() % 30) - 15;
+  } while(m_coefficient == 0);
 
   // generates y values from x values and coefficients
   m_y.resize(size/step);
   for(i = 0; i < m_y.size();i++)
     m_y[i] = f(m_x[i]);
-
-  // finds a zero of the function
-  m_zero = bisectionMethod(m_x.front(),m_x.back(),m_error);
 }
 
 // ****************************************
@@ -44,10 +51,6 @@ Function::Function(int power, std::string difficulty)
 // ****************************************
 int Function::getPower() const {
   return m_power;
-}
-
-QVector<double> Function::getCoefficients() const {
-  return m_coefficients;
 }
 
 QVector<double> Function::getX() const {
@@ -58,42 +61,62 @@ QVector<double> Function::getY() const {
   return m_y;
 }
 
-double Function::getZero() const {
-  return m_zero;
+QVector<double> Function::getZeros() const {
+    return m_zeros;
 }
 
-std::string Function::getDiffiulty() const {
-  return m_difficulty;
+double Function::getZero() const {
+    int randi = rand()%m_zeros.size();
+    return m_zeros[randi];
+}
+
+double Function::getZero(int index) const {
+    try {
+        return m_zeros[index];
+    } catch (...) {
+        std::cout << "The Index is out of range!" << std::endl;
+        return -1;
+    }
+}
+
+double Function::getCoefficient() const {
+  return m_coefficient;
+}
+
+std::string Function::getDifficulty() const{
+    return m_difficulty;
 }
 
 // ****************************************
 // Other Public Functions
 // ****************************************
 bool Function::is_graphed() const {
-  if(m_x.size() == 1 || m_y.size() == 1){
-    return false;
-  }
+    if(m_x.size() == 1 || m_y.size() == 1)
+        return false;
+    return true;
+}
 
-  return true;
+bool Function::is_zero(double zero) const {
+    double lowerBound, upperBound;
+    for(int i = 0; i < m_zeros.size(); i++) {
+        lowerBound = m_zeros[i] - m_error;
+        upperBound = m_zeros[i] + m_error;
+        if(zero > lowerBound && zero < upperBound)
+            return true;
+    }
+    return false;
 }
 
 void Function::printFunc(std::stringstream & x) const {
-  std::string output = "f(x) = " + std::to_string(m_factor);
-  for(int i = 0 ; i < m_coefficients.size(); i++) {
-    double val = m_coefficients[i];
+  std::string output = "f(x) = " + std::to_string(m_coefficient);
+  for(int i = 0 ; i < m_zeros.size(); i++) {
+    double val = m_zeros[i];
     if(val < 0)
-      output += "(x - (" + std::to_string(m_coefficients[i]) + "))\n";
+      output += "(x - (" + std::to_string(m_zeros[i]) + "))\n";
     else
-      output += "(x - " + std::to_string(m_coefficients[i]) + ")\n";
+      output += "(x - " + std::to_string(m_zeros[i]) + ")\n";
   }
   x << output ;
-}
-
-double Function::f(double x) const {
-  double y = 1;
-  for(int j = 0; j < m_coefficients.size();j++)
-    y *= x-m_coefficients[j];
-  return y;
 }
 
 void Function::printInfo(std::stringstream & y) const {
@@ -128,6 +151,13 @@ void Function::printInfo(std::stringstream & y) const {
               << "f(x) = ax^4+bx^3+cx^2+dx+e." << std::endl
               << "Where a,b,c,d, and e are all constants." << std::endl
               << "It also follows the form ";
+}
+
+double Function::f(double x) const {
+  double y = 1;
+  for(int j = 0; j < m_zeros.size();j++)
+    y *= x-m_zeros[j];
+  return y;
 }
 
 // ****************************************
