@@ -130,7 +130,7 @@ class Function {
    */
   ~Function();
  private:
-  /* Function bisectionMethod---DEPRECATED
+  /* Function bisectionMethod
    * will approximate a zero of the function
    * @param start: double,the left bound of interest
    * @param end: double,the right bound of interest

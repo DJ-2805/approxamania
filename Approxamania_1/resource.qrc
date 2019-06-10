@@ -4,5 +4,7 @@
         <file>img/bluegrid.jpg</file>
         <file>img/epsilon.jpg</file>
         <file>img/Waves.mp3</file>
+        <file>img/screen1.png</file>
+        <file>img/screen2.png</file>
     </qresource>
 </RCC>

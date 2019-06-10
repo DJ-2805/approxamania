@@ -1,21 +1,15 @@
-# pic10c_project
-  - function class
-    - constants
-    - power
-    - max/mins
-    - bounds
-  - plotter
-  - graph
-  - linerider
-  - Project Approximania
-     - Details
-       Application will take a function to be plotted, and user will guess a max on that function. If user is within error bound, they get to play a game where a character will ride on the curve of the function.
-     - Design
-       There will be a title screen with a text box to take in a function to be plotted. The plot will appear and user can make a guess of an extremum within the bound of the plot. If it is within the bound, they play, if not they get more tries depending on difficulty.
-     - Plan
-       - Week 3: Title Screen, lower level approximation method
-       - Week 4: Plotting the Function correctly
-       - Week 5: implementing user interface with the curve
-       - Week 6: implementing user interface with the curve
-       - Week 7: cleaning up GUI
-       - Week 8: polishing code and GUI
+# Approxamania
+### Details
+ This is a education application that works around polynomials.
+ It plots the user specified function along side others,
+ and has the user guess which one is the specified one.
+
+### Instructions
+ When running the game, choose a degree from the spin-box menu,
+ and then choose the difficulty. The difficulty will decide how
+ many functions alongside the specified one will be plotted. When
+ playing, click on the specified graph and click 'Choose Graph.' 
+ If the selection is incorrect, you will lose a life. If it is correct,
+ you will progress to the next difficulty. In the end, information
+ about the specified polynomial will be displayed to have the user
+ learn about the patterns observed and any other extra information.
