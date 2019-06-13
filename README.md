@@ -4,7 +4,7 @@ This is a education application that works around polynomials.
 It plots the user specified function along side others,
 and has the user guess which one is the specified one.
 
-![Front Page](https://github.com/dj-2805/blob/master/Approxamania_1/img/screen1.png)
+![Front Page](https://github.com/dj-2805/approxamania/blob/master/Approxamania_1/img/screen1.png)
 
 ### Installation
 The user will need Qt Software to run the project. Furthermore, 
@@ -23,7 +23,7 @@ about the specified polynomial will be displayed to have the user
 learn about the patterns observed and any other extra information.
 
 
-![Game Page](https://github.com/dj-2805/blob/master/Approxamania_1/img/screen2.png)
+![Game Page](https://github.com/dj-2805/approxamania/blob/master/Approxamania_1/img/screen2.png)
 
 # Team
 This project was designed as an assignment for our coding class.
